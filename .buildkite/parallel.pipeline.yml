@@ -3,7 +3,7 @@ steps:
     steps:
       - command: "scripts/hello.sh"
         label: "Job"
-        parallelism: 100
+        parallelism: 75
         plugins:
           - kubernetes:
               gitEnvFrom:
