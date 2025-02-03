@@ -21,6 +21,8 @@ while IFS= read -r tenant; do
       - label: ":rocket: Apply Spoke for ${tenant}"
         command: "echo ./apply-spoke.sh ${tenant}"
         key: "apply-${tenant}"
+        retry:
+          automatic: true
         plugins:
           - kubernetes:
               gitEnvFrom:
@@ -40,6 +42,8 @@ while IFS= read -r tenant; do
       - label: ":test_tube: Run Integration Tests for ${tenant}"
         command: "echo ./run-tests.sh ${tenant}"
         depends_on: "apply-${tenant}"
+        retry:
+          automatic: true
         plugins:
           - kubernetes:
               gitEnvFrom:
