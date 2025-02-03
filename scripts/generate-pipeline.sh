@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Get and clean tenant list
-TENANTS=$(echo "$BUILDKITE_INPUT_TENANTS" | tr -d '[:space:]' | tr ',' '\n')
+TENANTS=$(buildkite-agent meta-data get tenants | tr -d '[:space:]' | tr ',' '\n')
 
 # Create temporary pipeline file
 PIPELINE_FILE=$(mktemp)
