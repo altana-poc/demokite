@@ -4,18 +4,3 @@ steps:
       - command: "scripts/hello.sh"
         label: "Job"
         parallelism: 75
-        plugins:
-          - kubernetes:
-              gitEnvFrom:
-                - secretRef:
-                    name: my-git-ssh-credentials
-              podSpecPatch:
-                containers:
-                - name: container-0    # <---- You must specify this as exactly `container-0` for now.
-                  resources:           #       We are experimenting with ways to make it more ergonomic
-                    requests:
-                      cpu: 500m
-                      memory: 50Mi
-                    limits:
-                      cpu: 600m
-                      memory: 1Gi
