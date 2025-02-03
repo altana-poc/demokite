@@ -5,9 +5,14 @@ set -euo pipefail
 TENANTS=$(buildkite-agent meta-data get tenants | tr -d '[:space:]' | tr ',' '\n')
 
 buildkite-agent annotate --style 'info' <<EOF
-## Tenants targeted by deployment:
+## Client List
 
+<details>
+  <summary>Click to view all 100 clients</summary>
+  
 $(echo "$TENANTS" | sed 's/^/- /')
+
+</details>
 EOF
 
 # Create temporary pipeline file
