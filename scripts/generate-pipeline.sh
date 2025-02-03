@@ -8,7 +8,7 @@ TENANTS=$(echo "${tenants}" | tr -d '[:space:]' | tr ',' '\n')
 buildkite-agent annotate --style 'info' <<EOF
 ## Client List
 
-printf '```text\n%s\n```' "$tenants"
+$(printf '```text\n%s\n```' "$tenants")
 
 <details>
   <summary>Click to view all 100 clients</summary>
