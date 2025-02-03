@@ -21,10 +21,40 @@ while IFS= read -r tenant; do
       - label: ":rocket: Apply Spoke for ${tenant}"
         command: "echo ./apply-spoke.sh ${tenant}"
         key: "apply-${tenant}"
+        plugins:
+          - kubernetes:
+              gitEnvFrom:
+                - secretRef:
+                    name: my-git-ssh-credentials
+              podSpecPatch:
+                containers:
+                - name: container-0
+                  resources:
+                    requests:
+                      cpu: 250m
+                      memory: 50Mi
+                    limits:
+                      cpu: 250m
+                      memory: 1Gi
       
       - label: ":test_tube: Run Integration Tests for ${tenant}"
         command: "echo ./run-tests.sh ${tenant}"
         depends_on: "apply-${tenant}"
+        plugins:
+          - kubernetes:
+              gitEnvFrom:
+                - secretRef:
+                    name: my-git-ssh-credentials
+              podSpecPatch:
+                containers:
+                - name: container-0
+                  resources:
+                    requests:
+                      cpu: 250m
+                      memory: 50Mi
+                    limits:
+                      cpu: 250m
+                      memory: 1Gi
 YAML
   fi
 done <<< "$TENANTS"
