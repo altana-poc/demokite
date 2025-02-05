@@ -33,13 +33,17 @@ while IFS= read -r tenant; do
     key: "deploy-${tenant}"
     steps:
       - label: ":rocket: Apply Spoke for ${tenant}"
-        command: "echo ./apply-spoke.sh ${tenant}"
+        command: |
+          echo ./apply-spoke.sh ${tenant}
+          sleep 60
         key: "apply-${tenant}"
         retry:
           automatic: true
       
       - label: ":test_tube: Run Integration Tests for ${tenant}"
-        command: "echo ./run-tests.sh ${tenant}"
+        command: |
+          echo ./run-tests.sh ${tenant}
+          sleep 60
         depends_on: "apply-${tenant}"
         retry:
           automatic: true
